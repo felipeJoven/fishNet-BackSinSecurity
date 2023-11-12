@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class SalidaAlimentosDto {
     private String numeroFactura;
-    private Integer kilosSalida;
-    private Integer lote;
+    private int numeroKilos;
+    private int loteId;
+    private int tipoAlimentoId;
 }

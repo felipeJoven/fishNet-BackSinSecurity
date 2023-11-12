@@ -23,7 +23,7 @@ public class SalidaAlimentos extends Base {
     private String numeroFactura;
     
     @Column(name = "numero_kilos", nullable = false)
-    private Integer kilosSalida;
+    private Integer numeroKilos;
 
     // Relaciones
 
@@ -31,5 +31,9 @@ public class SalidaAlimentos extends Base {
     @ManyToOne(optional = false)
     @JoinColumn(name = "lote_id", nullable = false, foreignKey = @ForeignKey(name = "fk_salida_alimentos_lote"))
     private Lote lote;
-    
+
+    // TipoAlimento
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "tipo_alimento_id", nullable = false, foreignKey = @ForeignKey(name = "fk_salida_alimentos_tipo_alimento"))
+    private TipoAlimento tipoAlimento;
 }

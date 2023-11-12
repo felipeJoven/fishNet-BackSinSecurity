@@ -7,7 +7,7 @@ import com.fish.fishNet.Service.EspeciesService;
 import com.fish.fishNet.Service.LoteService;
 import com.fish.fishNet.Service.ProveedorService;
 import com.fish.fishNet.Service.UnidadProductivaService;
-import com.fish.fishNet.dtos.LoteDTO;
+import com.fish.fishNet.Dtos.LoteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

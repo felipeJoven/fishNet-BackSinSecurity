@@ -1,10 +1,10 @@
 package com.fish.fishNet.Controller;
 
 import com.fish.fishNet.Dtos.DefaultResponseDto;
-import com.fish.fishNet.Dtos.ServiceResponseDto;
-import com.fish.fishNet.Service.AuthService;
 import com.fish.fishNet.Dtos.DtoLogin;
 import com.fish.fishNet.Dtos.DtoRegistro;
+import com.fish.fishNet.Dtos.ServiceResponseDto;
+import com.fish.fishNet.Service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

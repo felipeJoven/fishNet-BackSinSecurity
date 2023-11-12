@@ -10,7 +10,7 @@ public class EntradaAlimentosDto {
     private String numeroFactura;
     private LocalDate fechaVencimiento;
     private String registroIca;
-    private Integer numeroKilos;
-    private Integer tipoAlimentoId;
-    private Integer proveedorId;
+    private int numeroKilos;
+    private int tipoAlimentoId;
+    private int proveedorId;
 }

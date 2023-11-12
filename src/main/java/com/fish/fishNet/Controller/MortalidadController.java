@@ -3,7 +3,7 @@ package com.fish.fishNet.Controller;
 import com.fish.fishNet.Model.*;
 import com.fish.fishNet.Service.LoteService;
 import com.fish.fishNet.Service.MortalidadService;
-import com.fish.fishNet.dtos.MortalidadDTO;
+import com.fish.fishNet.Dtos.MortalidadDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

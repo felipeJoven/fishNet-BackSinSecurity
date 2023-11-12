@@ -1,14 +1,14 @@
 package com.fish.fishNet.Service.Impl;
 
-import com.fish.fishNet.Model.Roles;
 import com.fish.fishNet.Dtos.DefaultResponseDto;
+import com.fish.fishNet.Dtos.DtoLogin;
+import com.fish.fishNet.Dtos.DtoRegistro;
 import com.fish.fishNet.Dtos.ServiceResponseDto;
+import com.fish.fishNet.Model.Roles;
 import com.fish.fishNet.Model.Usuario;
 import com.fish.fishNet.Repository.RolesRepository;
 import com.fish.fishNet.Repository.UsuarioRepository;
 import com.fish.fishNet.Service.AuthService;
-import com.fish.fishNet.Dtos.DtoLogin;
-import com.fish.fishNet.Dtos.DtoRegistro;
 import com.fish.fishNet.security.JwtGenerador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

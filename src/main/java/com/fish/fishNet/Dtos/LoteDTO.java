@@ -1,4 +1,4 @@
-package com.fish.fishNet.dtos;
+package com.fish.fishNet.Dtos;
 
 import lombok.Data;
 
