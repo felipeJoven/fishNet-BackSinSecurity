@@ -23,8 +23,7 @@ public class MortalidadController extends BaseControllerImpl<Mortalidad, Mortali
     @Autowired
     private LoteService loteService;
 
-
-    @PostMapping("/crear-mortalidad")
+    @PostMapping("/registrar")
     public ResponseEntity<?> crearMortalidad(@RequestBody MortalidadDTO mortalidadDTO) throws Exception {
         Mortalidad nuevaMortalidad = new Mortalidad();
         nuevaMortalidad.setAnimalesMuertos(mortalidadDTO.getAnimalesMuertos());

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends BaseRespository<Usuario, Integer> {
+
     //Metodo para poder buscar un usuario mediante su nombre
     Optional<Usuario> findByUsername(String username);
 

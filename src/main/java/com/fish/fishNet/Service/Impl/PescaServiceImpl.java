@@ -84,7 +84,7 @@ public class PescaServiceImpl extends BaseServiceImpl<Pesca, Integer> implements
             }
 
             //Validar que muertos no sea mayor que el lote
-            if (animalesInicial <= numeroAnimales) {
+            if (animalesPescadosAhora <= animalesInicial) {
                 if(animalesPescadosAntes > animalesPescadosAhora) {
                     numeroAnimalesActual = numeroAnimales + (animalesPescadosAntes - animalesPescadosAhora);
                 } else  {

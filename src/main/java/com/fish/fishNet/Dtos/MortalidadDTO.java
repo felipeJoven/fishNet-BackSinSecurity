@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MortalidadDTO {
-    private Integer animalesMuertos;
+    private int animalesMuertos;
     private String observacion;
-    private Integer loteId;
+    private int loteId;
 }

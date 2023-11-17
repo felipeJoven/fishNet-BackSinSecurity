@@ -6,6 +6,8 @@ import com.fish.fishNet.Service.Impl.SalidaAlimentosServiceImpl;
 import com.fish.fishNet.Service.SalidaAlimentosService;
 import com.fish.fishNet.Dtos.SalidaAlimentosDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +19,16 @@ public class SalidaAlimentosController extends BaseControllerImpl<SalidaAlimento
     private final SalidaAlimentosService salidaAlimentosService;
 
     @PostMapping("/registrar")
-    public SalidaAlimentos registrarSalida(@RequestBody SalidaAlimentosDto salidaAlimentosDto) {
-        return salidaAlimentosService.salidaAlimento(salidaAlimentosDto);
+    public ResponseEntity<SalidaAlimentos> registrarSalida(@RequestBody SalidaAlimentosDto salidaAlimentosDto) {
+        try {
+             SalidaAlimentos salidaAlimentos = salidaAlimentosService.salidaAlimento(salidaAlimentosDto);
+            return new ResponseEntity<>(salidaAlimentos, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            // Manejar la excepción específica lanzada cuando hay errores en los parámetros o reglas de negocio
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            // Manejar otras excepciones generales
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

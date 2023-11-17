@@ -67,7 +67,7 @@ public class LoteController extends BaseControllerImpl<Lote, LoteServiceImpl> {
         return ResponseEntity.status(HttpStatus.OK).body(loteGuardado);
     }
 
-
+/*
     @PutMapping("/actualizar-lote/{id}")
     public ResponseEntity<?> actualizarLote(@PathVariable Integer id, @RequestBody LoteDTO loteDTO) throws Exception {
         // Primero, verifica si el lote con el ID proporcionado existe en la base de datos
@@ -110,5 +110,5 @@ public class LoteController extends BaseControllerImpl<Lote, LoteServiceImpl> {
 
         return ResponseEntity.status(HttpStatus.OK).body(loteActualizado);
     }
-
+*/
 }

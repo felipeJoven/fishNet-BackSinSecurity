@@ -48,11 +48,11 @@ public class SecurityConfig {
                 .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                     .requestMatchers("/api/V1/auth/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/V1/crear").hasAuthority("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/V1/crear").hasAnyAuthority("ADMIN", "USER")
                     .requestMatchers(HttpMethod.GET,"/api/V1/listar").hasAnyAuthority("ADMIN" , "USER")
                     .requestMatchers(HttpMethod.GET,"/api/V1/listarId/**").hasAnyAuthority("ADMIN" , "USER")
-                    .requestMatchers(HttpMethod.DELETE,"/api/V1/eliminar/**").hasAuthority("ADMIN")
-                    .requestMatchers(HttpMethod.PUT, "/api/V1/actualizar").hasAuthority("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/V1/eliminar/**").hasAnyAuthority("ADMIN", "USER")
+                    .requestMatchers(HttpMethod.PUT, "/api/V1/actualizar").hasAnyAuthority("ADMIN", "USER")
                     .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

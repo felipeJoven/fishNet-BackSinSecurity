@@ -7,9 +7,9 @@ import java.time.LocalDate;
 @Data
 public class LoteDTO {
     private String nombreLote;
-    private Integer numeroAnimales;
+    private int numeroAnimales;
     private LocalDate fechaSiembra;
-    private Integer proveedorId;
-    private Integer especiesId;
-    private Integer unidadProductivaId;
+    private int proveedorId;
+    private int especiesId;
+    private int unidadProductivaId;
 }

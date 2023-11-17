@@ -25,8 +25,8 @@ public class LoteServiceImpl extends BaseServiceImpl<Lote, Integer> implements L
 
     @Override
     public Lote save(Lote lote) {
+        // animalesInicial toma el valor de numeroAnimales
         try {
-            // Aquí, antes de guardar el lote, puedes establecer animalesInicial si es nulo
             if (lote.getAnimalesInicial() == null) {
                 lote.setAnimalesInicial(lote.getNumeroAnimales());
                 return super.save(lote);

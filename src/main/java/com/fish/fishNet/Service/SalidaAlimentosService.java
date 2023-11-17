@@ -5,5 +5,5 @@ import com.fish.fishNet.Dtos.SalidaAlimentosDto;
 
 public interface SalidaAlimentosService extends BaseService<SalidaAlimentos, Integer> {
 
-    SalidaAlimentos salidaAlimento(SalidaAlimentosDto salidaAlimentosDto);
+    SalidaAlimentos salidaAlimento(SalidaAlimentosDto salidaAlimentosDto) throws Exception;
 }

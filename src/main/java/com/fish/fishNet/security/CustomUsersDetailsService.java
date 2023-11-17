@@ -31,6 +31,7 @@ public class CustomUsersDetailsService implements UserDetailsService {
     public Collection<GrantedAuthority> mapToAuthorities(List<Roles> roles){
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
+
     //Método para traernos un usuario con todos sus datos por medio de sus username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

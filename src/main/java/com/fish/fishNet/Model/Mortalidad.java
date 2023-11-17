@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Mortalidad extends Base {
 
     @Column(name = "animales_muertos", nullable = false)
-    private Integer animalesMuertos;
+    private int animalesMuertos;
 
     @Column(name = "observacion", nullable = false)
     private String observacion;

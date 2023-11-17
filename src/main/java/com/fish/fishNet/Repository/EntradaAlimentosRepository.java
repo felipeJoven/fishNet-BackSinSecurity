@@ -10,17 +10,13 @@ public interface EntradaAlimentosRepository extends BaseRespository<EntradaAlime
 
     EntradaAlimentos findByNumeroFactura(String numeroFactura);
 
-    @Query(value = "SELECT COALESCE(SUM(numero_kilos), 0) AS kilos FROM entrada_alimentos WHERE numero_factura = ?1 AND tipo_alimento_id = ?2", nativeQuery = true)
+    @Query(value = "SELECT kilos_inicial FROM entrada_alimentos WHERE numero_factura = ?1 AND tipo_alimento_id = ?2", nativeQuery = true)
     Integer totalEntradas(String numeroFactura, int tipoAlimentoId);
 
-    @Query("SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM EntradaAlimentos e WHERE e.fechaVencimiento = :fechaVencimiento AND e.numeroFactura = :numeroFactura AND e.registroIca = :registroIca AND e.numeroKilos = :numeroKilos AND e.tipoAlimento.id = :tipoAlimentoId AND e.proveedor.id = :proveedorId")
+    @Query("SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM EntradaAlimentos e WHERE e.numeroFactura = :numeroFactura AND e.tipoAlimento.id = :tipoAlimentoId")
     boolean existByEntradaAlimento(
-            @Param("fechaVencimiento") LocalDate fechaVencimiento,
             @Param("numeroFactura") String numeroFactura,
-            @Param("registroIca") String registroIca,
-            @Param("numeroKilos") int numeroKilos,
-            @Param("tipoAlimentoId") Integer tipoAlimentoId,
-            @Param("proveedorId") Integer proveedorId
+            @Param("tipoAlimentoId") Integer tipoAlimentoId
     );
 
 }

@@ -42,17 +42,17 @@ public class EntradaAlimentosServiceImpl extends BaseServiceImpl<EntradaAlimento
         String numeroFactura = nuevaEntradaDto.getNumeroFactura();
         String registroIca = nuevaEntradaDto.getRegistroIca();
         int numeroKilos = nuevaEntradaDto.getNumeroKilos();
-        Integer tipoAlimentoId = nuevaEntradaDto.getTipoAlimentoId();
-        Integer proveedorId = nuevaEntradaDto.getProveedorId();
+        int tipoAlimentoId = nuevaEntradaDto.getTipoAlimentoId();
+        int proveedorId = nuevaEntradaDto.getProveedorId();
 
 
         // Realiza la verificación en el repositorio
         boolean existeEntrada = entradaAlimentosRepository.existByEntradaAlimento(
-                fechaVencimiento, numeroFactura, registroIca, numeroKilos, tipoAlimentoId, proveedorId
+                numeroFactura, tipoAlimentoId
         );
 
         if (existeEntrada) {
-            // Lanzar una excepción personalizada si la entrada ya existe
+            // Excepción personalizada si la entrada ya existe
             throw new IllegalArgumentException(MENSAJE_ERROR_ENTRADA);
         } else {
             // Si no existe, puedes continuar con la creación de la entrada
@@ -72,7 +72,15 @@ public class EntradaAlimentosServiceImpl extends BaseServiceImpl<EntradaAlimento
             if(proveedor != null) {
                 nuevaEntrada.setProveedor(proveedor);
             }
-            // Guardar la nueva entrada en la base de datos
+
+            // Se realiza set para que muestre la fecha de creación en la base de datos
+            nuevaEntrada.setFechaCreacion(LocalDate.now());
+
+            // kilosInicial toma el valor de numeroKilos
+            if (nuevaEntrada.getKilosInicial() == null) {
+                nuevaEntrada.setKilosInicial(nuevaEntrada.getNumeroKilos());
+            }
+
             entradaAlimentosRepository.save(nuevaEntrada);
         }
         return true;
