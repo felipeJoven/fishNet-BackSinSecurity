@@ -2,6 +2,7 @@ package com.fish.fishNet.Service.Impl;
 
 import com.fish.fishNet.Model.Proveedor;
 import com.fish.fishNet.Model.TipoAlimento;
+import com.fish.fishNet.Repository.SalidaAlimentosRepository;
 import com.fish.fishNet.Service.ProveedorService;
 import com.fish.fishNet.Service.TipoAlimentoService;
 import com.fish.fishNet.Dtos.EntradaAlimentosDto;
@@ -28,6 +29,9 @@ public class EntradaAlimentosServiceImpl extends BaseServiceImpl<EntradaAlimento
 
     @Autowired
     private ProveedorService proveedorService;
+
+    @Autowired
+    private SalidaAlimentosRepository salidaAlimentosRepository;
 
     public EntradaAlimentosServiceImpl(BaseRespository<EntradaAlimentos, Integer> baseRespository){
         super(baseRespository);
@@ -73,17 +77,45 @@ public class EntradaAlimentosServiceImpl extends BaseServiceImpl<EntradaAlimento
                 nuevaEntrada.setProveedor(proveedor);
             }
 
-            // Se realiza set para que muestre la fecha de creación en la base de datos
-            nuevaEntrada.setFechaCreacion(LocalDate.now());
-
             // kilosInicial toma el valor de numeroKilos
             if (nuevaEntrada.getKilosInicial() == null) {
                 nuevaEntrada.setKilosInicial(nuevaEntrada.getNumeroKilos());
             }
 
+            // Se realiza set para que muestre la fecha de creación en la base de datos
+            nuevaEntrada.setFechaCreacion(LocalDate.now());
+
             entradaAlimentosRepository.save(nuevaEntrada);
         }
         return true;
+    }
+
+    @Override
+    public EntradaAlimentos update(Integer id, EntradaAlimentos entradaAlimentos) {
+        try {
+            // Obtener la entrada de alimentos existente por su ID
+            EntradaAlimentos entradaExistente = findById(id);
+
+            // Verificar si ya se ha realizado una salida para esta entrada
+            if (!entradaAlimentosRepository.tieneSalida(entradaExistente.getNumeroFactura(), entradaExistente.getTipoAlimento().getId())) {
+                // Si no hay salida realizada, permitir la actualización
+                entradaExistente.setNumeroFactura(entradaAlimentos.getNumeroFactura());
+                entradaExistente.setFechaVencimiento(entradaAlimentos.getFechaVencimiento());
+                entradaExistente.setRegistroIca(entradaAlimentos.getRegistroIca());
+                entradaExistente.setNumeroKilos(entradaAlimentos.getNumeroKilos());
+
+                // Actualizar otras propiedades según sea necesario
+                entradaExistente.setKilosInicial(entradaAlimentos.getNumeroKilos());
+
+                // Guardar la entrada de alimentos actualizada
+                return entradaAlimentosRepository.save(entradaExistente);
+            } else {
+                // Si ya se ha realizado una salida, lanzar una excepción o manejar según tus necesidades
+                throw new IllegalStateException("No se puede actualizar la entrada de alimentos porque ya se ha realizado una salida.");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar la Entrada.", e);
+        }
     }
 
 }

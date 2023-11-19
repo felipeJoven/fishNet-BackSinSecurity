@@ -19,4 +19,10 @@ public interface EntradaAlimentosRepository extends BaseRespository<EntradaAlime
             @Param("tipoAlimentoId") Integer tipoAlimentoId
     );
 
+    @Query("SELECT CASE WHEN COUNT(s) > 0 THEN true ELSE false END FROM SalidaAlimentos s WHERE s.numeroFactura = :numeroFactura AND s.tipoAlimento.id = :tipoAlimentoId")
+    boolean tieneSalida(
+            @Param("numeroFactura") String numeroFactura,
+            @Param("tipoAlimentoId") Integer tipoAlimentoId
+    );
+
 }

@@ -31,7 +31,7 @@ public class LoteController extends BaseControllerImpl<Lote, LoteServiceImpl> {
     @Autowired
     private EspeciesService especiesService;
 
-    @PostMapping("/crear-lote")
+    @PostMapping("/registrar")
     public ResponseEntity<?> crearLote(@RequestBody LoteDTO loteDTO) throws Exception {
         Lote nuevoLote = new Lote();
         nuevoLote.setNombreLote(loteDTO.getNombreLote());
@@ -67,48 +67,5 @@ public class LoteController extends BaseControllerImpl<Lote, LoteServiceImpl> {
         return ResponseEntity.status(HttpStatus.OK).body(loteGuardado);
     }
 
-/*
-    @PutMapping("/actualizar-lote/{id}")
-    public ResponseEntity<?> actualizarLote(@PathVariable Integer id, @RequestBody LoteDTO loteDTO) throws Exception {
-        // Primero, verifica si el lote con el ID proporcionado existe en la base de datos
-        Lote loteExistente = loteService.findById(id);
 
-        if (loteExistente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Lote no encontrado.\"}");
-        }
-
-        // Actualiza los campos del lote existente con los valores de loteDTO
-        loteExistente.setNombreLote(loteDTO.getNombreLote());
-        loteExistente.setNumeroAnimales(loteDTO.getNumeroAnimales());
-        loteExistente.setFechaSiembra(loteDTO.getFechaSiembra());
-
-        // Corrige las llamadas a los servicios para obtener las entidades relacionadas
-        Proveedor proveedor = proveedorService.findById(loteDTO.getProveedorId());
-        UnidadProductiva unidadProductiva = unidadProductivaService.findById(loteDTO.getUnidadProductivaId());
-        Especies especies = especiesService.findById(loteDTO.getEspeciesId());
-
-        // Verifica si las entidades se encontraron en la base de datos
-        if (proveedor == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Proveedor no encontrado.\"}");
-        }
-
-        if (unidadProductiva == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Unidad Productiva no encontrado.\"}");
-        }
-
-        if (especies == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Especies no encontrado.\"}");
-        }
-
-        // Establece las relaciones en el lote existente
-        loteExistente.setProveedor(proveedor);
-        loteExistente.setUnidadProductiva(unidadProductiva);
-        loteExistente.setEspecies(especies);
-
-        // Luego, guarda el lote actualizado en la base de datos
-        Lote loteActualizado = loteService.save(loteExistente);
-
-        return ResponseEntity.status(HttpStatus.OK).body(loteActualizado);
-    }
-*/
 }
