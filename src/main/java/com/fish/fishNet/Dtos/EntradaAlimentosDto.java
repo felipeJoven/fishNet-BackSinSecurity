@@ -1,7 +1,6 @@
 package com.fish.fishNet.Dtos;
 
 import lombok.Data;
-
 import java.time.LocalDate;
 
 @Data

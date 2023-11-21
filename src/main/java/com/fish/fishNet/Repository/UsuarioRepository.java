@@ -9,8 +9,8 @@ import java.util.Optional;
 public interface UsuarioRepository extends BaseRespository<Usuario, Integer> {
 
     //Metodo para poder buscar un usuario mediante su nombre
-    Optional<Usuario> findByUsername(String username);
+    Optional<Usuario> findByEmail(String email);
 
     //Metodo para verificar si un usuario existe en la BD
-    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 }

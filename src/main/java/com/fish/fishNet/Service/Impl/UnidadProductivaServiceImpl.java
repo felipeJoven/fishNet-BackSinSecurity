@@ -8,10 +8,6 @@ import com.fish.fishNet.Repository.BaseRespository;
 import com.fish.fishNet.Repository.UnidadProductivaRepository;
 import com.fish.fishNet.Service.UnidadProductivaService;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
 @Service
 public class UnidadProductivaServiceImpl extends BaseServiceImpl<UnidadProductiva, Integer> implements UnidadProductivaService {
 

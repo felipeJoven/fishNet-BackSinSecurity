@@ -1,10 +1,11 @@
 package com.fish.fishNet.Repository;
 
 import com.fish.fishNet.Model.EntradaAlimentos;
+import com.fish.fishNet.Model.TipoAlimento;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
+import java.util.Optional;
 
 public interface EntradaAlimentosRepository extends BaseRespository<EntradaAlimentos, Integer>{
 
@@ -25,4 +26,5 @@ public interface EntradaAlimentosRepository extends BaseRespository<EntradaAlime
             @Param("tipoAlimentoId") Integer tipoAlimentoId
     );
 
+    Optional<EntradaAlimentos> findByNumeroFacturaAndTipoAlimento(String numeroFactura, TipoAlimento tipoAlimento);
 }

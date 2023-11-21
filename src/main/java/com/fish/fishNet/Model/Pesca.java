@@ -23,7 +23,7 @@ public class Pesca extends Base {
     private int animalesPescados;
     
     @Column(name="peso_promedio", nullable = false)
-    private int pesoPromedio;
+    private double pesoPromedio;
 
     // Lote
     @ManyToOne(optional = false)

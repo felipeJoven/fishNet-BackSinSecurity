@@ -22,11 +22,8 @@ public class RestControllerAuth {
 
     @Autowired
     private AuthService authService;
-
     @Autowired
     private UsuarioRepository usuarioRepository;
-
-
     @Autowired
     private RolesRepository rolesRepository;
 

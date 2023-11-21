@@ -38,12 +38,15 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private RolesRepository rolesRepository;
 
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
+
     @Override
     public ServiceResponseDto<DefaultResponseDto> login(DtoLogin dtoLogin) {
         try {
-            Optional<Usuario> optionalUsuario = usuarioRepository.findByUsername(dtoLogin.getUsername());
+            Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(dtoLogin.getEmail());
             if (optionalUsuario.isPresent() && passwordEncoder.matches(dtoLogin.getPassword(), optionalUsuario.get().getPassword())) {
-                Authentication authentication = new UsernamePasswordAuthenticationToken(dtoLogin.getUsername(), dtoLogin.getPassword());
+                Authentication authentication = new UsernamePasswordAuthenticationToken(dtoLogin.getEmail(), dtoLogin.getPassword());
                 return new ServiceResponseDto<>(new DefaultResponseDto(jwtGenerador.generarToken(authentication)), HttpStatus.OK);
             } else return new ServiceResponseDto<>(new DefaultResponseDto("Credenciales invalidas"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -54,8 +57,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public ServiceResponseDto<DefaultResponseDto> registerByRol(DtoRegistro dtoRegistro, String rol) {
         try {
-            if (usuarioRepository.existsByUsername(dtoRegistro.getUsername())) {
-                return new ServiceResponseDto<>(new DefaultResponseDto("El usuario ya existe, intenta con otro"), HttpStatus.BAD_REQUEST);
+            if (usuarioRepository.existsByEmail(dtoRegistro.getEmail())) {
+                return new ServiceResponseDto<>(new DefaultResponseDto("El correo electrónico ya existe, intenta con otro"), HttpStatus.BAD_REQUEST);
+            }
+            if (!usuarioService.passwordsEqual(dtoRegistro.getPassword(), dtoRegistro.getConfirmarPassword())) {
+                return new ServiceResponseDto<>(new DefaultResponseDto("Las contraseñas no coinciden"), HttpStatus.BAD_REQUEST);
             }
             Usuario usuario = new Usuario();
             usuario.setUsername(dtoRegistro.getUsername());

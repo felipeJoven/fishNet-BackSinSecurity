@@ -25,16 +25,12 @@ public class LoteServiceImpl extends BaseServiceImpl<Lote, Integer> implements L
 
     @Autowired
     private LoteRepository loteRepository;
-
     @Autowired
     private ProveedorService proveedorService;
-
     @Autowired
     private UnidadProductivaService unidadProductivaService;
-
     @Autowired
     private EspeciesService especiesService;
-
 
     public LoteServiceImpl(BaseRespository<Lote, Integer> baseRespository){
 
@@ -66,7 +62,6 @@ public class LoteServiceImpl extends BaseServiceImpl<Lote, Integer> implements L
             e.printStackTrace();
             throw new RuntimeException("Error al calcular dias.", e);
         }
-
     }
 
     @Override
@@ -96,47 +91,36 @@ public class LoteServiceImpl extends BaseServiceImpl<Lote, Integer> implements L
         try {
             // Obtener el lote existente por su ID
             Lote loteExistente = findById(id);
-
-            System.out.print(loteExistente);
-
             if (loteExistente == null) {
                 System.out.print(" Antes de validar lote" );
                 throw new Exception("El lote no existe.");
             }
-
             // Verificar si hay salidas de animales relacionadas antes de permitir la actualización
             if (loteRepository.salenAnimales(id)) {
                 System.out.print(" Durante ver salida");
                 throw new Exception("No se puede actualizar el lote porque tiene salidas de animales relacionadas.");
             }
-
             // Actualizar los campos del lote existente con los valores del lote recibido
             loteExistente.setNombreLote(lote.getNombreLote());
             loteExistente.setNumeroAnimales(lote.getNumeroAnimales());
             loteExistente.setFechaSiembra(lote.getFechaSiembra());
-
             // Corrige las llamadas a los servicios para obtener las entidades relacionadas
             Proveedor proveedor = proveedorService.findById(lote.getProveedor().getId());
             UnidadProductiva unidadProductiva = unidadProductivaService.findById(lote.getUnidadProductiva().getId());
             Especies especies = especiesService.findById(lote.getEspecies().getId());
-
             // Verifica si las entidades se encontraron en la base de datos
             if (Objects.isNull(proveedor) || Objects.isNull(unidadProductiva) || Objects.isNull(especies)) {
                 throw new Exception("Proveedor, Unidad Productiva o Especies no encontrados.");
             }
-
             // Establece las relaciones en el lote existente
             loteExistente.setProveedor(proveedor);
             loteExistente.setUnidadProductiva(unidadProductiva);
             loteExistente.setEspecies(especies);
-
             // Luego, guarda el lote actualizado en la base de datos
             return loteRepository.save(loteExistente);
-
         } catch (Exception e) {
         // Manejo de excepciones...
         throw new Exception("Error al actualizar el lote." + e.getMessage());
-    }
-
+        }
     }
 }

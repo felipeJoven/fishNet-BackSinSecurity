@@ -21,7 +21,7 @@ public class Proveedor extends Base {
     private String apellido;
 
     @Column(name = "telefono", nullable = false)
-    private Integer telefono;
+    private int telefono;
 
     @Column(name = "correo", nullable = false)
     private String correo;
@@ -33,7 +33,7 @@ public class Proveedor extends Base {
     private String razonSocial;
 
     @Column(name = "numero_identificacion", nullable = false)
-    private Integer numeroIdentificacion;
+    private int numeroIdentificacion;
 
 
     // Relaciones

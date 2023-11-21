@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class PescaDTO {
     private int animalesPescados;
-    private int pesoPromedio;
+    private double pesoPromedio;
     private int loteId;
 }
