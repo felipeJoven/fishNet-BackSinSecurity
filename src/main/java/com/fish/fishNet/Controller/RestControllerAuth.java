@@ -3,7 +3,7 @@ package com.fish.fishNet.Controller;
 import com.fish.fishNet.Dtos.DefaultResponseDto;
 import com.fish.fishNet.Dtos.DtoLogin;
 import com.fish.fishNet.Dtos.DtoRegistro;
-import com.fish.fishNet.Dtos.ServiceResponseDto;
+import com.fish.fishNet.Dtos.ServiceResponseDTO;
 import com.fish.fishNet.Model.Roles;
 import com.fish.fishNet.Model.Usuario;
 import com.fish.fishNet.Repository.RolesRepository;
@@ -29,19 +29,19 @@ public class RestControllerAuth {
 
     @PostMapping("register-user")
     public ResponseEntity<DefaultResponseDto> userRegister(@RequestBody DtoRegistro dtoRegistro) {
-        ServiceResponseDto<DefaultResponseDto> response = this.authService.registerByRol(dtoRegistro, "USER");
+        ServiceResponseDTO<DefaultResponseDto> response = this.authService.registerByRol(dtoRegistro, "USER");
         return new ResponseEntity<>(response.getMessage(), response.getStatus());
     }
 
     @PostMapping("register-admin")
     public ResponseEntity<DefaultResponseDto> registrarAdmin(@RequestBody DtoRegistro dtoRegistro) {
-        ServiceResponseDto<DefaultResponseDto> response = this.authService.registerByRol(dtoRegistro, "ADMIN");
+        ServiceResponseDTO<DefaultResponseDto> response = this.authService.registerByRol(dtoRegistro, "ADMIN");
         return new ResponseEntity<>(response.getMessage(), response.getStatus());
     }
 
     @PostMapping("login")
     public ResponseEntity<DefaultResponseDto> login(@RequestBody DtoLogin dtoLogin) {
-        ServiceResponseDto<DefaultResponseDto> response = authService.login(dtoLogin);
+        ServiceResponseDTO<DefaultResponseDto> response = authService.login(dtoLogin);
         return new ResponseEntity<>(response.getMessage(), response.getStatus());
     }
 

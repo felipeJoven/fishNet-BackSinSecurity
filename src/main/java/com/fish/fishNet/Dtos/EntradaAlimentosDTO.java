@@ -4,7 +4,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class EntradaAlimentosDto {
+public class EntradaAlimentosDTO {
 
     private String numeroFactura;
     private LocalDate fechaVencimiento;

@@ -4,7 +4,7 @@ import com.fish.fishNet.Controller.Impl.BaseControllerImpl;
 import com.fish.fishNet.Model.SalidaAlimentos;
 import com.fish.fishNet.Service.Impl.SalidaAlimentosServiceImpl;
 import com.fish.fishNet.Service.SalidaAlimentosService;
-import com.fish.fishNet.Dtos.SalidaAlimentosDto;
+import com.fish.fishNet.Dtos.SalidaAlimentosDTO;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class SalidaAlimentosController extends BaseControllerImpl<SalidaAlimento
     private final SalidaAlimentosService salidaAlimentosService;
 
     @PostMapping("/registrar")
-    public ResponseEntity<SalidaAlimentos> registrarSalida(@RequestBody SalidaAlimentosDto salidaAlimentosDto) {
+    public ResponseEntity<SalidaAlimentos> registrarSalida(@RequestBody SalidaAlimentosDTO salidaAlimentosDto) {
         try {
              SalidaAlimentos salidaAlimentos = salidaAlimentosService.salidaAlimento(salidaAlimentosDto);
             return new ResponseEntity<>(salidaAlimentos, HttpStatus.OK);

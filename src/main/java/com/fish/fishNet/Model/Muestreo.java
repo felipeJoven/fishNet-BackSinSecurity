@@ -15,10 +15,10 @@ import lombok.Setter;
 public class Muestreo extends Base {
 
     @Column(name="peso_inicial", nullable = false)
-    private double pesoInicial;
+    private Double pesoInicial;
 
     @Column(name="peso_actual", nullable = false)
-    private double pesoActual;
+    private Double pesoActual;
 
     // Lote
     @ManyToOne(optional = false)

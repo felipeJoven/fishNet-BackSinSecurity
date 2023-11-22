@@ -2,7 +2,7 @@ package com.fish.fishNet.Service.Impl;
 
 import com.fish.fishNet.Model.*;
 import com.fish.fishNet.Repository.*;
-import com.fish.fishNet.Dtos.SalidaAlimentosDto;
+import com.fish.fishNet.Dtos.SalidaAlimentosDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,14 +34,16 @@ public class SalidaAlimentosServiceImpl extends BaseServiceImpl<SalidaAlimentos,
     }
 
     @Override
-    public SalidaAlimentos salidaAlimento(SalidaAlimentosDto salidaAlimentosDto) throws Exception {
+    public SalidaAlimentos salidaAlimento(SalidaAlimentosDTO salidaAlimentosDto) throws Exception {
         EntradaAlimentos facturaEntrada = entradaAlimentosRepository.findByNumeroFactura(salidaAlimentosDto.getNumeroFactura());
         if (facturaEntrada == null) {
             throw new IllegalArgumentException(String.format(MENSAJE_ERROR_NUMERO_FACTURA, salidaAlimentosDto.getNumeroFactura()));
         }
+
         double kilosEntrada = entradaAlimentosRepository.totalEntradas(salidaAlimentosDto.getNumeroFactura(), salidaAlimentosDto.getTipoAlimentoId());
         double kilosSalida = salidaAlimentosRepository.totalSalidas(salidaAlimentosDto.getNumeroFactura(), salidaAlimentosDto.getTipoAlimentoId());
         double kilosDisponibles = kilosEntrada - kilosSalida;
+
         if (salidaAlimentosDto.getNumeroKilos() > kilosDisponibles) {
             throw new IllegalArgumentException(String.format(MENSAJE_ERROR_SALIDA, kilosDisponibles));
         } else {
@@ -49,14 +51,18 @@ public class SalidaAlimentosServiceImpl extends BaseServiceImpl<SalidaAlimentos,
             facturaEntrada.setNumeroKilos(facturaEntrada.getNumeroKilos() - salidaAlimentosDto.getNumeroKilos());
             entradaAlimentosRepository.save(facturaEntrada);
         }
+
         Optional<Lote> lote = loteRepository.findById(salidaAlimentosDto.getLoteId());
         Optional<TipoAlimento> tipoAlimento = tipoAlimentoRepository.findById(salidaAlimentosDto.getTipoAlimentoId());
+
         if (lote.isPresent() && tipoAlimento.isPresent()) {
             SalidaAlimentos salidaAlimentos = new SalidaAlimentos(salidaAlimentosDto.getNumeroFactura(),
                     salidaAlimentosDto.getNumeroKilos(), lote.get(), tipoAlimento.get());
             // Se realiza set para que muestre la fecha de creación en la base de datos
             salidaAlimentos.setFechaCreacion(LocalDate.now());
+
             salidaAlimentosRepository.save(salidaAlimentos);
+
             return salidaAlimentos;
         }
         throw new IllegalArgumentException(MENSAJE_ERROR_LOTE_TIPO_ALIMENTO);
@@ -108,11 +114,13 @@ public class SalidaAlimentosServiceImpl extends BaseServiceImpl<SalidaAlimentos,
             Optional<SalidaAlimentos> salidaAlimentosOptional = baseRepository.findById(id);
             if (salidaAlimentosOptional.isPresent()) {
                 SalidaAlimentos salidaAlimentos = salidaAlimentosOptional.get();
+
                 // Buscar la EntradaAlimentos correspondiente
                 EntradaAlimentos entradaAlimentos = entradaAlimentosRepository.findByNumeroFactura(salidaAlimentos.getNumeroFactura());
                 if (entradaAlimentos != null && salidaAlimentos.getTipoAlimento().equals(entradaAlimentos.getTipoAlimento())) {
                     // Sumar la cantidad de kilos a la entidad EntradaAlimentos
                     entradaAlimentos.setNumeroKilos(entradaAlimentos.getNumeroKilos() + salidaAlimentos.getNumeroKilos());
+
                     entradaAlimentosRepository.save(entradaAlimentos);
                 }
                 baseRepository.deleteById(id);

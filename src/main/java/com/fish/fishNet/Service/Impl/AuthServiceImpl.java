@@ -3,7 +3,7 @@ package com.fish.fishNet.Service.Impl;
 import com.fish.fishNet.Dtos.DefaultResponseDto;
 import com.fish.fishNet.Dtos.DtoLogin;
 import com.fish.fishNet.Dtos.DtoRegistro;
-import com.fish.fishNet.Dtos.ServiceResponseDto;
+import com.fish.fishNet.Dtos.ServiceResponseDTO;
 import com.fish.fishNet.Model.Roles;
 import com.fish.fishNet.Model.Usuario;
 import com.fish.fishNet.Repository.RolesRepository;
@@ -42,26 +42,26 @@ public class AuthServiceImpl implements AuthService {
     private UsuarioServiceImpl usuarioService;
 
     @Override
-    public ServiceResponseDto<DefaultResponseDto> login(DtoLogin dtoLogin) {
+    public ServiceResponseDTO<DefaultResponseDto> login(DtoLogin dtoLogin) {
         try {
             Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(dtoLogin.getEmail());
             if (optionalUsuario.isPresent() && passwordEncoder.matches(dtoLogin.getPassword(), optionalUsuario.get().getPassword())) {
                 Authentication authentication = new UsernamePasswordAuthenticationToken(dtoLogin.getEmail(), dtoLogin.getPassword());
-                return new ServiceResponseDto<>(new DefaultResponseDto(jwtGenerador.generarToken(authentication)), HttpStatus.OK);
-            } else return new ServiceResponseDto<>(new DefaultResponseDto("Credenciales invalidas"), HttpStatus.BAD_REQUEST);
+                return new ServiceResponseDTO<>(new DefaultResponseDto(jwtGenerador.generarToken(authentication)), HttpStatus.OK);
+            } else return new ServiceResponseDTO<>(new DefaultResponseDto("Credenciales invalidas"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ServiceResponseDto<>(new DefaultResponseDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ServiceResponseDTO<>(new DefaultResponseDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ServiceResponseDto<DefaultResponseDto> registerByRol(DtoRegistro dtoRegistro, String rol) {
+    public ServiceResponseDTO<DefaultResponseDto> registerByRol(DtoRegistro dtoRegistro, String rol) {
         try {
             if (usuarioRepository.existsByEmail(dtoRegistro.getEmail())) {
-                return new ServiceResponseDto<>(new DefaultResponseDto("El correo electrónico ya existe, intenta con otro"), HttpStatus.BAD_REQUEST);
+                return new ServiceResponseDTO<>(new DefaultResponseDto("El correo electrónico ya existe, intenta con otro"), HttpStatus.BAD_REQUEST);
             }
             if (!usuarioService.passwordsEqual(dtoRegistro.getPassword(), dtoRegistro.getConfirmarPassword())) {
-                return new ServiceResponseDto<>(new DefaultResponseDto("Las contraseñas no coinciden"), HttpStatus.BAD_REQUEST);
+                return new ServiceResponseDTO<>(new DefaultResponseDto("Las contraseñas no coinciden"), HttpStatus.BAD_REQUEST);
             }
             Usuario usuario = new Usuario();
             usuario.setUsername(dtoRegistro.getUsername());
@@ -74,10 +74,10 @@ public class AuthServiceImpl implements AuthService {
             if (optionalRoles.isPresent()) {
                 usuario.setRoles(Collections.singletonList(optionalRoles.get()));
                 usuarioRepository.save(usuario);
-                return new ServiceResponseDto<>(new DefaultResponseDto("Registro de usuario exitoso"), HttpStatus.OK);
-            } else return  new ServiceResponseDto<>(new DefaultResponseDto("El rol no existe"), HttpStatus.BAD_REQUEST);
+                return new ServiceResponseDTO<>(new DefaultResponseDto("Registro de usuario exitoso"), HttpStatus.OK);
+            } else return  new ServiceResponseDTO<>(new DefaultResponseDto("El rol no existe"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ServiceResponseDto<>(new DefaultResponseDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ServiceResponseDTO<>(new DefaultResponseDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

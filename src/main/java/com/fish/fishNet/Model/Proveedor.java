@@ -45,7 +45,7 @@ public class Proveedor extends Base {
 
     // Tipo de Identificación
     @ManyToOne(optional = false)
-    @JoinColumn(name = "tipo_identificacion_id", nullable = false, foreignKey = @ForeignKey(name = "fk_proveedor_tipo_identificacionr"))
+    @JoinColumn(name = "tipo_identificacion_id", nullable = false, foreignKey = @ForeignKey(name = "fk_proveedor_tipo_identificacion"))
     private TipoIdentificacion tipoIdentificacion;
 
 }

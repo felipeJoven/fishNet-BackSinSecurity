@@ -1,7 +1,7 @@
 package com.fish.fishNet.Controller;
 
 import com.fish.fishNet.Service.EntradaAlimentosService;
-import com.fish.fishNet.Dtos.EntradaAlimentosDto;
+import com.fish.fishNet.Dtos.EntradaAlimentosDTO;
 import com.fish.fishNet.Controller.Impl.BaseControllerImpl;
 import com.fish.fishNet.Model.EntradaAlimentos;
 import com.fish.fishNet.Service.Impl.EntradaAlimentosServiceImpl;
@@ -19,7 +19,7 @@ public class EntradaAlimentosController extends BaseControllerImpl<EntradaAlimen
     private EntradaAlimentosService entradaAlimentosService;
 
     @PostMapping("/registrar")
-    public boolean registrarEntrada(@RequestBody EntradaAlimentosDto entradaAlimentosDto) throws Exception {
+    public boolean registrarEntrada(@RequestBody EntradaAlimentosDTO entradaAlimentosDto) throws Exception {
         return entradaAlimentosService.entradaAlimentosYaExiste(entradaAlimentosDto);
     }
 }

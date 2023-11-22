@@ -7,7 +7,7 @@ import com.fish.fishNet.Service.EspeciesService;
 import com.fish.fishNet.Service.LoteService;
 import com.fish.fishNet.Service.ProveedorService;
 import com.fish.fishNet.Service.UnidadProductivaService;
-import com.fish.fishNet.Dtos.LoteDTO;
+import com.fish.fishNet.Dtos.LoteDto;
 import com.fish.fishNet.Controller.Impl.BaseControllerImpl;
 import com.fish.fishNet.Model.Lote;
 import com.fish.fishNet.Service.Impl.LoteServiceImpl;
@@ -32,7 +32,7 @@ public class LoteController extends BaseControllerImpl<Lote, LoteServiceImpl> {
     private EspeciesService especiesService;
 
     @PostMapping("/registrar")
-    public ResponseEntity<?> crearLote(@RequestBody LoteDTO loteDTO) throws Exception {
+    public ResponseEntity<?> crearLote(@RequestBody LoteDto loteDTO) throws Exception {
         Lote nuevoLote = new Lote();
         nuevoLote.setNombreLote(loteDTO.getNombreLote());
         nuevoLote.setNumeroAnimales(loteDTO.getNumeroAnimales());

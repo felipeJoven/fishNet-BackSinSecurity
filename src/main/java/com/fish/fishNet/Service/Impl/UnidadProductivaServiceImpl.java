@@ -12,19 +12,17 @@ import com.fish.fishNet.Service.UnidadProductivaService;
 
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class UnidadProductivaServiceImpl extends BaseServiceImpl<UnidadProductiva, Integer> implements UnidadProductivaService {
 
     private static final String MENSAJE_ERROR_UNIDAD = "Ya existe una unidad productiva con el mismo nombre o coordenadas.";
-    private static final String MENSAJE_ERROR_ID = "No se encontró la unidad productiva con ID: .";
+    private static final String MENSAJE_ERROR_ID = "No se encontró la unidad productiva con ese ID: .";
 
     @Autowired
     private UnidadProductivaRepository unidadProductivaRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     public UnidadProductivaServiceImpl(BaseRespository<UnidadProductiva, Integer> baseRespository){
         super(baseRespository);
@@ -41,10 +39,10 @@ public class UnidadProductivaServiceImpl extends BaseServiceImpl<UnidadProductiv
         // Realiza la verificación en el repositorio
         boolean existeUnidadP = unidadProductivaRepository.existByUnidadProductiva(nombreUnidadP, coordenadas);
         if (existeUnidadP) {
-            // Si existe si la unidad productiva hay excepción
+            // Si existe la unidad productiva hay excepción
             throw new IllegalArgumentException(MENSAJE_ERROR_UNIDAD);
         } else {
-            // Si no existe, puedes continuar con la creación de la entrada
+            // Si no existe, sigue la creación de la unidad productiva
             UnidadProductiva nuevaUnidadP = new UnidadProductiva();
             nuevaUnidadP.setNombreUnidadP(nombreUnidadP);
             nuevaUnidadP.setArea(area);
@@ -64,26 +62,38 @@ public class UnidadProductivaServiceImpl extends BaseServiceImpl<UnidadProductiv
         if (optionalUnidadProductiva.isPresent()) {
             UnidadProductiva unidadProductivaSaved = optionalUnidadProductiva.get();
 
-            // Verificar si los nuevos valores generarían duplicados excluyendo la entidad actual
-            if (unidadProductivaRepository.existByUnidadProductiva(
-                    unidadProductiva.getNombreUnidadP(),
-                    unidadProductiva.getCoordenadas()
-                    )) {
-                throw new IllegalArgumentException(MENSAJE_ERROR_UNIDAD);
+            if(
+                    !Objects.equals(unidadProductivaSaved.getCoordenadas(), unidadProductiva.getCoordenadas()) ||
+                    !Objects.equals(unidadProductivaSaved.getNombreUnidadP(), unidadProductiva.getNombreUnidadP())
+            ) {
+                // Verificar si los nuevos valores generaran duplicados excluyendo la entidad actual
+                boolean exist = unidadProductivaRepository.existByUnidadProductiva(
+                        unidadProductiva.getNombreUnidadP(),
+                        unidadProductiva.getCoordenadas(),
+                        id
+                );
+                if (!exist) {
+                    return updateUnidadProductiva(unidadProductivaSaved, unidadProductiva);
+                } else {
+                    throw new IllegalArgumentException(MENSAJE_ERROR_UNIDAD);
+                }
+            } else {
+                return updateUnidadProductiva(unidadProductivaSaved, unidadProductiva);
             }
-
-            // Actualizar la entidad con los nuevos valores
-            unidadProductivaSaved.setNombreUnidadP(unidadProductiva.getNombreUnidadP());
-            unidadProductivaSaved.setArea(unidadProductiva.getArea());
-            unidadProductivaSaved.setCoordenadas(unidadProductiva.getCoordenadas());
-            unidadProductivaSaved.setObservacion(unidadProductiva.getObservacion());
-            unidadProductivaSaved.setProfundidad(unidadProductiva.getProfundidad());
-
-            // Guardar la entidad actualizada
-            unidadProductivaRepository.save(unidadProductivaSaved);
-            return unidadProductivaSaved;
         } else {
             throw new Exception(MENSAJE_ERROR_ID + id);
         }
+    }
+
+    private UnidadProductiva updateUnidadProductiva(UnidadProductiva unidadProductivaSaved, UnidadProductiva unidadProductiva) {
+        // Actualizar la entidad con los nuevos valores
+        unidadProductivaSaved.setNombreUnidadP(unidadProductiva.getNombreUnidadP());
+        unidadProductivaSaved.setArea(unidadProductiva.getArea());
+        unidadProductivaSaved.setCoordenadas(unidadProductiva.getCoordenadas());
+        unidadProductivaSaved.setObservacion(unidadProductiva.getObservacion());
+        unidadProductivaSaved.setProfundidad(unidadProductiva.getProfundidad());
+
+        unidadProductivaRepository.save(unidadProductivaSaved);
+        return unidadProductivaSaved;
     }
 }

@@ -51,7 +51,6 @@ public class LoteServiceImpl extends BaseServiceImpl<Lote, Integer> implements L
         return lote;
     }
 
-
     @Override
     public List<Lote> findAll() {
         try {
@@ -104,6 +103,11 @@ public class LoteServiceImpl extends BaseServiceImpl<Lote, Integer> implements L
             loteExistente.setNombreLote(lote.getNombreLote());
             loteExistente.setNumeroAnimales(lote.getNumeroAnimales());
             loteExistente.setFechaSiembra(lote.getFechaSiembra());
+
+            if (!loteRepository.salenAnimales(id)) {
+                loteExistente.setAnimalesInicial(lote.getNumeroAnimales());
+            }
+
             // Corrige las llamadas a los servicios para obtener las entidades relacionadas
             Proveedor proveedor = proveedorService.findById(lote.getProveedor().getId());
             UnidadProductiva unidadProductiva = unidadProductivaService.findById(lote.getUnidadProductiva().getId());
@@ -116,10 +120,9 @@ public class LoteServiceImpl extends BaseServiceImpl<Lote, Integer> implements L
             loteExistente.setProveedor(proveedor);
             loteExistente.setUnidadProductiva(unidadProductiva);
             loteExistente.setEspecies(especies);
-            // Luego, guarda el lote actualizado en la base de datos
+            // Guarda el lote actualizado en la base de datos
             return loteRepository.save(loteExistente);
         } catch (Exception e) {
-        // Manejo de excepciones...
         throw new Exception("Error al actualizar el lote." + e.getMessage());
         }
     }
