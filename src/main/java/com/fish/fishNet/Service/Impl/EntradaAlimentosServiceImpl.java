@@ -43,7 +43,7 @@ public class EntradaAlimentosServiceImpl extends BaseServiceImpl<EntradaAlimento
         LocalDate fechaVencimiento = nuevaEntradaDto.getFechaVencimiento();
         String numeroFactura = nuevaEntradaDto.getNumeroFactura();
         String registroIca = nuevaEntradaDto.getRegistroIca();
-        int numeroKilos = nuevaEntradaDto.getNumeroKilos();
+        double numeroKilos = nuevaEntradaDto.getNumeroKilos();
         int tipoAlimentoId = nuevaEntradaDto.getTipoAlimentoId();
         int proveedorId = nuevaEntradaDto.getProveedorId();
         // Realiza la verificación en el repositorio
@@ -83,7 +83,7 @@ public class EntradaAlimentosServiceImpl extends BaseServiceImpl<EntradaAlimento
     @Override
     public EntradaAlimentos update(Integer id, EntradaAlimentos entradaAlimentos) {
         try {
-            // Obtener la entrada de alimentos existente por su ID
+            // Obtener la entrada de alimento por su ID
             EntradaAlimentos entradaExistente = findById(id);
             // Verificar si ya se ha realizado una salida para esta entrada
             if (!entradaAlimentosRepository.tieneSalida(entradaExistente.getNumeroFactura(), entradaExistente.getTipoAlimento().getId())) {

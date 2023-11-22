@@ -21,5 +21,4 @@ public class EspeciesController extends BaseControllerImpl<Especies, EspeciesSer
     public boolean registrarEspecie(@RequestBody EspeciesDTO especiesDTO) throws Exception {
         return especiesService.especieYaExiste(especiesDTO);
     }
-
 }

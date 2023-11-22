@@ -1,10 +1,6 @@
 package com.fish.fishNet.Service.Impl;
 
-import com.fish.fishNet.Dtos.EntradaAlimentosDto;
 import com.fish.fishNet.Dtos.EspeciesDTO;
-import com.fish.fishNet.Model.EntradaAlimentos;
-import com.fish.fishNet.Model.Proveedor;
-import com.fish.fishNet.Model.TipoAlimento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +32,7 @@ public class EspeciesServiceImpl extends BaseServiceImpl<Especies, Integer> impl
                 nombreEspecie
         );
         if (existeEspecie) {
-            // Excepción personalizada si la entrada ya existe
+            // Si existe si la especie hay excepción
             throw new IllegalArgumentException(MENSAJE_ERROR_ESPECIE);
         } else {
             // Si no existe, puedes continuar con la creación de la entrada

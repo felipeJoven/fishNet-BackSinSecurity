@@ -39,9 +39,9 @@ public class SalidaAlimentosServiceImpl extends BaseServiceImpl<SalidaAlimentos,
         if (facturaEntrada == null) {
             throw new IllegalArgumentException(String.format(MENSAJE_ERROR_NUMERO_FACTURA, salidaAlimentosDto.getNumeroFactura()));
         }
-        int kilosEntrada = entradaAlimentosRepository.totalEntradas(salidaAlimentosDto.getNumeroFactura(), salidaAlimentosDto.getTipoAlimentoId());
-        int kilosSalida = salidaAlimentosRepository.totalSalidas(salidaAlimentosDto.getNumeroFactura(), salidaAlimentosDto.getTipoAlimentoId());
-        int kilosDisponibles = kilosEntrada - kilosSalida;
+        double kilosEntrada = entradaAlimentosRepository.totalEntradas(salidaAlimentosDto.getNumeroFactura(), salidaAlimentosDto.getTipoAlimentoId());
+        double kilosSalida = salidaAlimentosRepository.totalSalidas(salidaAlimentosDto.getNumeroFactura(), salidaAlimentosDto.getTipoAlimentoId());
+        double kilosDisponibles = kilosEntrada - kilosSalida;
         if (salidaAlimentosDto.getNumeroKilos() > kilosDisponibles) {
             throw new IllegalArgumentException(String.format(MENSAJE_ERROR_SALIDA, kilosDisponibles));
         } else {
@@ -69,7 +69,7 @@ public class SalidaAlimentosServiceImpl extends BaseServiceImpl<SalidaAlimentos,
             List<SalidaAlimentos> salidaAlimentosList = salidaAlimentosRepository.findByNumeroFacturaAndTipoAlimento(salidaAlimentos.getNumeroFactura(), salidaAlimentos.getTipoAlimento());
             SalidaAlimentos salidaAlimentosSaved = null;
             if(!salidaAlimentosList.isEmpty()) {
-                int totaSalida = 0;
+                double totaSalida = 0;
                 Optional<EntradaAlimentos> entradaAlimentosOptional = entradaAlimentosRepository.findByNumeroFacturaAndTipoAlimento(salidaAlimentos.getNumeroFactura(), salidaAlimentos.getTipoAlimento());
                 if(entradaAlimentosOptional.isPresent()) {
                     for (SalidaAlimentos sa : salidaAlimentosList) {
@@ -81,7 +81,7 @@ public class SalidaAlimentosServiceImpl extends BaseServiceImpl<SalidaAlimentos,
                     }
                     totaSalida += salidaAlimentos.getNumeroKilos();
                     if(entradaAlimentosOptional.get().getKilosInicial() > totaSalida) {
-                        int restaKilos = (int) (entradaAlimentosOptional.get().getKilosInicial() - totaSalida);
+                        double restaKilos = (entradaAlimentosOptional.get().getKilosInicial() - totaSalida);
                         salidaAlimentosSaved.setNumeroKilos(salidaAlimentos.getNumeroKilos());
                         entradaAlimentosOptional.get().setNumeroKilos(restaKilos);
                         entradaAlimentosRepository.save(entradaAlimentosOptional.get());

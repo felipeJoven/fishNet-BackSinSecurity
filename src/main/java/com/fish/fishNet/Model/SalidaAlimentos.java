@@ -23,7 +23,7 @@ public class SalidaAlimentos extends Base {
     private String numeroFactura;
     
     @Column(name = "numero_kilos", nullable = false)
-    private Integer numeroKilos;
+    private Double numeroKilos;
 
     // Relaciones
 

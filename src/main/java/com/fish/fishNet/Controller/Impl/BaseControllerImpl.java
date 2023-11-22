@@ -63,7 +63,4 @@ public abstract class BaseControllerImpl<E extends Base, S extends BaseServiceIm
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\"}" + e.getMessage());
         }
     }
-
-
-
 }
