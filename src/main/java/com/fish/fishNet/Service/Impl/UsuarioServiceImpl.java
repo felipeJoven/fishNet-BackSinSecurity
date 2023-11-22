@@ -17,4 +17,8 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, Integer> implem
     public UsuarioServiceImpl(BaseRespository<Usuario, Integer> baseRespository){
         super(baseRespository);
     }
+
+    public boolean passwordsEqual(String password, String confirmPassword) {
+        return password.equals(confirmPassword);
+    }
 }

@@ -31,7 +31,10 @@ public class EntradaAlimentos extends Base {
     private String registroIca;
     
     @Column(name = "numero_kilos", nullable = false)
-    private Integer numeroKilos;
+    private Double numeroKilos;
+
+    @Column(name = "kilos_inicial")
+    private Double kilosInicial;
 
 
     // Relaciones

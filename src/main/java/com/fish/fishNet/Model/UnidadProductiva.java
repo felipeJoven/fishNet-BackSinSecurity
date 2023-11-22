@@ -26,6 +26,5 @@ public class UnidadProductiva extends Base {
     private String observacion;
 
     @Column(name = "profundidad", nullable = false)
-    private String profundidad;
-
+    private double profundidad;
 }

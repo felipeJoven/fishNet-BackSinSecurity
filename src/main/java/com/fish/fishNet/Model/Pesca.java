@@ -20,10 +20,10 @@ import lombok.Setter;
 public class Pesca extends Base {
     
     @Column(name="animales_pescados", nullable = false)
-    private Integer animalesPescados;
+    private int animalesPescados;
     
     @Column(name="peso_promedio", nullable = false)
-    private String pesoPromedio;
+    private double pesoPromedio;
 
     // Lote
     @ManyToOne(optional = false)

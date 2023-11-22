@@ -21,7 +21,7 @@ public class Proveedor extends Base {
     private String apellido;
 
     @Column(name = "telefono", nullable = false)
-    private Integer telefono;
+    private int telefono;
 
     @Column(name = "correo", nullable = false)
     private String correo;
@@ -33,7 +33,7 @@ public class Proveedor extends Base {
     private String razonSocial;
 
     @Column(name = "numero_identificacion", nullable = false)
-    private Integer numeroIdentificacion;
+    private int numeroIdentificacion;
 
 
     // Relaciones
@@ -45,7 +45,7 @@ public class Proveedor extends Base {
 
     // Tipo de Identificación
     @ManyToOne(optional = false)
-    @JoinColumn(name = "tipo_identificacion_id", nullable = false, foreignKey = @ForeignKey(name = "fk_proveedor_tipo_identificacionr"))
+    @JoinColumn(name = "tipo_identificacion_id", nullable = false, foreignKey = @ForeignKey(name = "fk_proveedor_tipo_identificacion"))
     private TipoIdentificacion tipoIdentificacion;
 
 }

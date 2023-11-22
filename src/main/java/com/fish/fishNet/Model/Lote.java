@@ -17,7 +17,7 @@ public class Lote extends Base {
     private String nombreLote;
 
     @Column(name = "numero_animales", nullable = false)
-    private Integer  numeroAnimales;
+    private int  numeroAnimales;
 
     @Column(name = "fecha_siembra", nullable = false)
     private LocalDate fechaSiembra;
